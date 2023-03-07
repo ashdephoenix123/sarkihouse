@@ -47,6 +47,10 @@ code {
     monospace;
 }
 
+#root{
+  margin-top: 7rem;
+}
+
 .navbar {
   padding: 1.5rem;
   display: flex;
@@ -166,9 +170,9 @@ code {
 
 }
 
-.home{
-  margin-top: 7rem;
-}
+// .home{
+//   margin-top: 7rem;
+// }
 .home__content {
   width: 60%;
   margin: 10rem auto;
