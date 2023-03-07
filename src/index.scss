@@ -223,7 +223,7 @@ code {
 
   @media only screen and (max-width: $bp-2) {
     flex-direction: column;
-    margin: 5rem auto;
+    margin: 10rem auto;
 
     .content__right {
       margin: 2rem 2rem 0 0;
@@ -233,7 +233,7 @@ code {
 
   @media only screen and (max-width: $bp-3) {
     // width: 100%;
-    margin: 2rem auto;
+    margin: 8rem auto 6rem;
     overflow: hidden;
 
     .content__left {
