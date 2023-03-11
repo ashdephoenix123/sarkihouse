@@ -7,6 +7,7 @@ const Card = (props) => {
     const { name, image, price, id, category } = props;
     return (
         <>
+        
             <div className="card">
                 <figure className='card-link'>
                     <Link to={`/singleproduct/${id}`}><img className='card-image' src={image} alt={`product-${id}`} /></Link>

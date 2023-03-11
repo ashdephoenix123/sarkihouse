@@ -23,6 +23,11 @@ const productReducer = (state, action) => {
             singleProduct: action.payload
         })
 
+        case "CHANGELAYOUTTYPE": return ({
+            ...state,
+            gridView: action.payload
+        })
+
         case "ERROR": return ({
             ...state,
             isLoading: false,

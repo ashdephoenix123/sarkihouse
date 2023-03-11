@@ -9,6 +9,7 @@ const initialState = {
     isLoading: false,
     isError: false,
     products: [],
+    gridView: true,
     featuredProducts: [],
     singleProduct: {}
 }
@@ -21,7 +22,7 @@ const AppProvider = ({ children }) => {
 
     const [progress, setProgress] = useState(0)
 
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState); 
 
     const getProducts = async (url) => {
         dispatch({ type: "LOAD_DATA" })
@@ -48,7 +49,6 @@ const AppProvider = ({ children }) => {
             dispatch({ type: "ERROR" })
             setProgress(100)
             navigate("pagenotfound")
-            // console.log(error);
         }
     }
 
@@ -56,7 +56,7 @@ const AppProvider = ({ children }) => {
         getProducts(API)
     }, [])
 
-    return <AppContext.Provider value={{...state, getSingleProductDetails, API, setProgress, progress}}>
+    return <AppContext.Provider value={{...state, dispatch ,getSingleProductDetails, API, setProgress, progress}}>
         {children}
     </AppContext.Provider>
 }
