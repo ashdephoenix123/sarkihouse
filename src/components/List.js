@@ -13,8 +13,8 @@ const List = (props) => {
             <div className="image__desc">
                 <div className="image__desc-name">{name}</div>
                 <div className="image__desc-price"><FormatPrice price={price} /></div>
-                <div className="image__desc-desc">{description.slice(0,140) + "..."}</div>
-                <Link className="btn-3 link" to={`/singleproduct/${id}`}>Read more</Link>
+                <div className="image__desc-desc">{description.slice(0, 140) + "..."}</div>
+                <Link className="btn-3 link" to={`/singleproduct/${id}`}>show me</Link>
             </div>
         </div>
     )

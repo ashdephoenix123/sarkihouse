@@ -20,6 +20,7 @@ $bp-2: 53.5625em; //857
 $bp-3: 47.375em; //734
 // $bp-3: 45.875em; //734
 $bp-4: 36.5625em; //585
+$bp-7: 29.5625em;
 $bp-5: 21.875em;
 
 * {
@@ -434,9 +435,8 @@ code {
     padding: 3rem 1rem 5rem;
     display: grid;
     grid-template-rows: min-content;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    // grid-template-columns: repeat(auto-fit, 200px);
-    // grid-column-gap: 8rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-column-gap: 8rem;
     grid-row-gap: 4rem;
     justify-content: center;
     border-bottom: 1px solid var(--col-gray-2);
@@ -1084,6 +1084,7 @@ code {
         padding: .5rem;
         border: 1px solid var(--col-gray-1);
         border-radius: 5px;
+        color: inherit;
 
         @media only screen and (max-width: $bp-3) {
         width: 10rem;
@@ -1188,6 +1189,11 @@ code {
   }
 
   &__items {
+
+    @media only screen and (max-width: $bp-4) {
+      // display: flex;
+      // flex-direction: column;
+    }
     .card {
       background-color: var(--col-gray-2);
     }
@@ -1196,4 +1202,6 @@ code {
 
 select {
   padding: 5px;
+  cursor: pointer;
+
 }

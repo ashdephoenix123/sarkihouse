@@ -9,9 +9,11 @@ const initialState = {
     isLoading: false,
     isError: false,
     products: [],
+    filterProducts: [],
     gridView: true,
     featuredProducts: [],
-    singleProduct: {}
+    singleProduct: {},
+    sortingtype: "recommended"
 }
 
 const API = 'https://api.pujakaitem.com/api/products'
@@ -52,11 +54,19 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    const sorting = () => {
+        dispatch({type: "SORT_TYPE", payload: state.products})
+    }
+
+    useEffect(()=> {
+        dispatch({type: "SORTING_PRODUCTS", payload: state.products})
+    }, [state.sortingtype])
+
     useEffect(() => {
         getProducts(API)
     }, [])
 
-    return <AppContext.Provider value={{...state, dispatch ,getSingleProductDetails, API, setProgress, progress}}>
+    return <AppContext.Provider value={{...state, dispatch ,getSingleProductDetails, API, setProgress, progress, sorting}}>
         {children}
     </AppContext.Provider>
 }

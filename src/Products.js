@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFeaturedData } from "./context/productContext";
 import Card from "./components/Card";
 import { HiViewGrid } from 'react-icons/hi'
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import List from "./components/List";
 
 const Products = () => {
-  const { products, gridView, dispatch, isLoading } = useFeaturedData()
+  const { filterProducts, gridView, dispatch, isLoading, sorting } = useFeaturedData();
 
   return <>
     <div className="products">
@@ -48,7 +48,7 @@ const Products = () => {
           </div>
           <div className="price">
             <h4 className="page__heading3">Price</h4>
-            <input type="range" name="" id="" />
+            <input type="range" name="price" min={0} max={100} />
           </div>
           <button className="btn">Clear Filters</button>
         </div>
@@ -61,11 +61,11 @@ const Products = () => {
             <HiBars4 size={20} onClick={() => dispatch({ type: "CHANGELAYOUTTYPE", payload: false })} />
           </div>
           <div className="products__total">
-            {products.length} Total Products
+            {filterProducts.length} Total Products
           </div>
           <div className="sort__dropdown">
-            <select name="sorting" id="sorting">
-              <option value="random">Sort</option>
+            <select name="sorting" id="sorting" onClick={sorting}>
+              <option value="recommended">Sort</option>
               <option value="lowest">Price (Lowest)</option>
               <option value="highest">Price (Highest)</option>
               <option value="atoz">Sort (A to Z)</option>
@@ -78,13 +78,13 @@ const Products = () => {
             <div className="featured-products">
               <div className="featured__desc">
                 <div className="featured__desc-items">
-                  {products.map((item, index) => {
+                  {filterProducts.map((item, index) => {
                     return <Card key={index} id={item.id} image={item.image} name={item.name} price={item.price} category={item.category} />
                   })}
                 </div>
               </div>
             </div> :
-            products.map((item, index) => {
+            filterProducts.map((item, index) => {
               return <List key={index} id={item.id} image={item.image} name={item.name} price={item.price} category={item.category} description={item.description} />
             })}
 
