@@ -1,56 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useFeaturedData } from "./context/productContext";
 import Card from "./components/Card";
 import { HiViewGrid } from 'react-icons/hi'
 import { HiBars4 } from "react-icons/hi2";
-import { Link } from "react-router-dom";
 import List from "./components/List";
+import Colorsavailable from "./components/Colorsavailable";
+import { useState } from "react";
+import FormatPrice from "./components/FormatPrice";
 
 const Products = () => {
-  const { filterProducts, gridView, dispatch, isLoading, sorting } = useFeaturedData();
+  const { filterProducts, gridView, dispatch, isLoading, sorting, products, clearFilter, searchFilter: { searchText, category, price, maxprice, minprice }, searchSort } = useFeaturedData();
+
+  const getUniqueData = (data, property) => {
+    let newVal = data.map((item) => {
+      return item[property]
+    })
+    if (property === "colors") {
+      newVal = newVal.flat()
+    }
+    return newVal = ["all", ...new Set(newVal)]
+  }
+
+  const categoryOnlyData = getUniqueData(products, "category")
+  const companyOnlyData = getUniqueData(products, "company")
+  const colorsOnlyData = getUniqueData(products, "colors")
+
 
   return <>
     <div className="products">
       <div className="products__filter">
         <div className="aside">
-          <input type="text" placeholder="Search" />
+          <form onSubmit={(e) => e.preventDefault()}>
+            <input type="text" placeholder="Search" name="searchText" value={searchText} onChange={searchSort} />
+          </form>
           <div className="category">
             <h4 className="page__heading3">Category</h4>
             <ul className="products__category">
-              <li className="category__lists">
-                <Link className="category__link active">All</Link>
-              </li>
-              <li className="category__lists">
-                <Link className="category__link">Mobile</Link>
-              </li>
-              <li className="category__lists">
-                <Link className="category__link">Accessories</Link>
-              </li>
-              <li className="category__lists">
-                <Link className="category__link">Laptops</Link>
-              </li>
-              <li className="category__lists">
-                <Link className="category__link">Watches</Link>
-              </li>
+              {categoryOnlyData.map((item, index) => {
+                return <li className="category__lists" key={index} >
+                  <button className={category === item ? "category__link active" : "category__link"} type="button" name="category" value={item} onClick={searchSort}>{item}</button>
+                </li>
+              })}
+
             </ul>
           </div>
           <div className="companies">
             <h4 className="page__heading3">Companies</h4>
-            <select name="companies" >
-              <option value="all">All</option>
-              <option value="apple">Apple</option>
-              <option value="samsung">Samsung</option>
+
+            <select name="company" onClick={searchSort}>
+              {companyOnlyData.map((item, index) => {
+                return <option key={index} value={item}>{item.slice(0, 1).toUpperCase() + item.slice(1)}</option>
+              })}
             </select>
           </div>
           <div className="colors">
             <h4 className="page__heading3">Colors</h4>
-            <span>something</span>
+            <span>
+              <div className="select__choice">
+                <div className="your__choice">
+                  {colorsOnlyData.map((item, index) => {
+                    if (item === "all") {
+                      return <button type="button" key={index} value="all" name="colors" className="button3" onClick={searchSort}>All</button>
+                    }
+                    return <button type="button" key={index} value={item} name="colors" className="available__color" style={{ backgroundColor: item }} onClick={searchSort}>
+                    </button>
+                  })}
+                </div>
+              </div>
+            </span>
           </div>
           <div className="price">
             <h4 className="page__heading3">Price</h4>
-            <input type="range" name="price" min={0} max={100} />
+            <p><FormatPrice price={price} /></p>
+            <input type="range" name="price" min={minprice} max={maxprice} value={price} onChange={searchSort}
+            />
           </div>
-          <button className="btn">Clear Filters</button>
+          <button className="btn" onClick={clearFilter}>Clear Filters</button>
         </div>
 
       </div>

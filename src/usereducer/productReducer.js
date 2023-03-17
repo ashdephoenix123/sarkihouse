@@ -10,12 +10,19 @@ const productReducer = (state, action) => {
                 return item.featured === true;
             });
 
+            let priceArr = action.payload.map((item) => {
+                return item.price;
+            })
+            priceArr = new Set([...priceArr])
+            const maxp = Math.max(...priceArr)
+
             return ({
                 ...state,
                 isLoading: false,
                 products: action.payload,
                 filterProducts: action.payload,
-                featuredProducts: featuredProducts
+                featuredProducts: featuredProducts,
+                searchFilter: { ...state.searchFilter, maxprice: maxp, price: maxp }
             });
 
         case "ADD_PRODUCT_DETAIL": return ({
@@ -30,52 +37,105 @@ const productReducer = (state, action) => {
         })
 
         case "SORT_TYPE":
-            let sorting = document.getElementById('sorting')
-            let sortvalue = sorting.options[sorting.selectedIndex].value;
 
             return ({
                 ...state,
-                sortingtype: sortvalue
+                sortingtype: action.payload
             })
 
         case "SORTING_PRODUCTS":
             let filter;
-            let tempfilter = [...action.payload];
+            const { sortingtype, filterProducts } = state;
+            let tempfilter = [...filterProducts];
 
-            switch (state.sortingtype) {
-                case "recommended":
-                    filter = tempfilter;
-                    break;
-
-                case "atoz":
-                    filter = tempfilter.sort((a, b) => {
+            const letsSortIt = (a, b) => {
+                switch (sortingtype) {
+                    case "atoz":
                         return a.name.localeCompare(b.name)
-                    })
-                    break;
 
-                case "ztoa":
-                    filter = tempfilter.sort((a, b) => {
+                    case "ztoa":
                         return b.name.localeCompare(a.name)
-                    })
-                    break;
 
-                case "lowest":
-                    filter = tempfilter.sort((a, b) => {
+                    case "lowest":
                         return a.price - b.price
-                    })
-                    break;
 
-                case "highest":
-                    filter = tempfilter.sort((a, b) => {
+                    case "highest":
                         return b.price - a.price
-                    })
-                    break;
+                    default: return a.id.localeCompare(b.id)
 
+                }
             }
+
+            filter = tempfilter.sort(letsSortIt);
 
             return ({
                 ...state,
                 filterProducts: filter
+            })
+
+        case "CHANGE_SEARCH_TEXT":
+            const { name, value } = action.payload;
+
+            return ({
+                ...state,
+                searchFilter: {
+                    ...state.searchFilter,
+                    [name]: value
+                }
+            })
+
+        case "FILTER_PRODUCTS_SEARCH":
+
+            const { searchFilter: { searchText, category, company, colors, price } } = state;
+            let tempProducts = [...state.products];
+
+            if (searchText) {
+                tempProducts = tempProducts.filter((item) => {
+                    return item.name.toLowerCase().includes(searchText)
+                })
+            } else if (category !== "all") {
+                tempProducts = tempProducts.filter((item) => {
+                    return item.category === category
+                })
+            } else if (company !== "all") {
+                tempProducts = tempProducts.filter((item) => {
+                    return item.company === company
+                })
+            } else if (colors !== "all") {
+                tempProducts = tempProducts.filter((item) => {
+                    return item.colors.includes(colors)
+                })
+            } else if (price) {
+                if (price === 0) {
+                    tempProducts = tempProducts.filter((item) => {
+                        return item.price <= maxp
+                    })
+                } else {
+                    tempProducts = tempProducts.filter((item) => {
+                        return item.price <= price
+                    })
+                }
+            }
+
+            return {
+                ...state,
+                filterProducts: tempProducts
+            }
+
+        case "CLEAR_FILTER":
+
+            return ({
+                ...state,
+                searchFilter: {
+                    ...state.searchFilter,
+                    searchText: "",
+                    company: "all",
+                    category: "all",
+                    colors: "all",
+                    price: state.searchFilter.maxprice,
+                    maxprice: state.searchFilter.maxprice,
+                    minprice: 0
+                }
             })
 
         case "ERROR": return ({

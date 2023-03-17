@@ -13,6 +13,15 @@ const initialState = {
     gridView: true,
     featuredProducts: [],
     singleProduct: {},
+    searchFilter: {
+        searchText: "",
+        company: "all",
+        category: "all",
+        colors: "all",
+        price: 0,
+        maxprice: 0,
+        minprice: 0
+    },
     sortingtype: "recommended"
 }
 
@@ -54,19 +63,30 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    const sorting = () => {
-        dispatch({type: "SORT_TYPE", payload: state.products})
+    const sorting = (e) => {
+        const value = e.target.value;
+        dispatch({type: "SORT_TYPE", payload: value})
+    }
+
+    const searchSort = (e) => {
+        const {name, value} = e.target;
+        dispatch({type: "CHANGE_SEARCH_TEXT", payload: {name, value}})
+    }
+
+    const clearFilter = () => {
+        dispatch({type: "CLEAR_FILTER"})
     }
 
     useEffect(()=> {
-        dispatch({type: "SORTING_PRODUCTS", payload: state.products})
-    }, [state.sortingtype])
+        dispatch({type: "FILTER_PRODUCTS_SEARCH"})
+        dispatch({type: "SORTING_PRODUCTS"})
+    }, [state.sortingtype, state.searchFilter])
 
     useEffect(() => {
         getProducts(API)
     }, [])
 
-    return <AppContext.Provider value={{...state, dispatch ,getSingleProductDetails, API, setProgress, progress, sorting}}>
+    return <AppContext.Provider value={{...state,clearFilter, dispatch ,getSingleProductDetails, API, setProgress, progress, sorting, searchSort}}>
         {children}
     </AppContext.Provider>
 }
