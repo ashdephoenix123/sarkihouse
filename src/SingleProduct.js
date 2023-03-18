@@ -9,10 +9,14 @@ import Colorsavailable from './components/Colorsavailable';
 import { useState } from 'react';
 import ProductImages from './components/ProductImages';
 import Stars from './components/Stars';
+import { useCartContext } from './context/CartContext';
+import QuantityCounter from './components/quantityCounter';
 
 const SingleProduct = () => {
   const { getSingleProductDetails, API, singleProduct, progress } = useFeaturedData();
-  const [quantity, setQuantity] = useState(1)
+  const [selectedColor, setSelectedColor] = useState("")
+
+  const {addToCart} = useCartContext()
 
   const { id } = useParams();
   const { name, company, price, description, category, stock, reviews, stars, colors, image } = singleProduct;
@@ -72,19 +76,11 @@ const SingleProduct = () => {
               <div className="select__choice">
                 <div className="your__choice">
                   Colors:
-                  <Colorsavailable colors={colors} />
+                  <Colorsavailable colors={colors} updateColor={setSelectedColor} selectedColor={selectedColor}/>
                 </div>
               </div>
-              <div className="quantity">
-                <button className='btn-2' onClick={() => {
-                  quantity > 1 && setQuantity(prev => prev - 1)
-                }}>-</button>
-                {quantity}
-                <button className='btn-2' onClick={() => {
-                  quantity < stock && setQuantity(prev => prev + 1)
-                }}>+</button>
-              </div>
-              <Link to="/cart" className='btn'>add to cart</Link>
+              <QuantityCounter stock={stock}/>
+              <Link to="/cart" className='btn' onClick={()=> addToCart(id, selectedColor, singleProduct, stock)}>add to cart</Link>
             </div>
           </div>
         </div>

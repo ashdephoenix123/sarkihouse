@@ -356,6 +356,8 @@ code {
   font-weight: 300;
 }
 
+
+
 .container {
 
   .contact__form {
@@ -877,6 +879,7 @@ code {
 
 .your__choice {
   display: flex;
+  // justify-content: center;
   align-items: center;
 
   .available {
@@ -1223,5 +1226,65 @@ code {
 select {
   padding: 5px;
   cursor: pointer;
+}
 
+.container2{
+  width: 60%;
+  margin: 0 auto;
+  padding: 6rem 0;
+}
+
+.cart-title{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(10rem, 1fr));
+  // grid-row-gap: 2rem;
+  grid-auto-rows: min-content;
+  text-align: center;
+  margin: 2rem auto;
+  align-items: center;
+
+  &-design{
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    color: var(--col-gray-3);
+    font-weight: bold;
+  }
+ 
+}
+
+.cart{
+  &__img{
+    width: 6rem;
+    height: 4rem;
+    display: block;
+    margin: 0 auto;
+  }
+
+  &-desc{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-item{
+    &__name{
+      text-transform: capitalize;
+    }
+  }
+  &__remove{
+    cursor: pointer;
+    color: rgb(185, 0, 0);
+  }
+
+  &-button{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+}
+
+
+.center2{
+  justify-content: center;
 }
