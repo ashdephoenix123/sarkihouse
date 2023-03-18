@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const { cartItems } = useCartContext();
-  console.log(cartItems)
-
   return (
     <>{cartItems.length !==0 ?
       <div className="container2">

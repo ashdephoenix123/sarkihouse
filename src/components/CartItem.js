@@ -13,21 +13,22 @@ const CartItem = ({ id, name, image, price, max, quantity, color }) => {
                     <Link to={`/singleproduct/${id}`}><img className='cart__img' src={image} alt={`img${id}`} /></Link>
                     <div className="cart-item">
                         <p className="cart-item__name">{name}</p>
-                        <p className='your__choice center2'>
-                            <p>Color:</p> <button className="available__color" style={{ backgroundColor: color }}></button>
-                        </p>
+                        <div className='your__choice center2'>
+                            <span>Color:</span> <button className="available__color" style={{ backgroundColor: color }}></button>
+                        </div>
                     </div>
                 </div>
-                <p className="cart__price">
+                <div className="cart__price">
                     {<FormatPrice price={price} />}
-                </p>
+                </div>
 
-                <p className="cart__quantity">
-                    <QuantityCounter stock={quantity} /> 
-                </p>
-                <p className="cart__subtotal">
-                    {<FormatPrice price={quantity * price} />}</p>
-                <div type='button'><BsTrashFill  className="cart__remove" size={20}/></div>
+                <div className="cart__quantity">
+                    <QuantityCounter stock={quantity} />
+                </div>
+                <div className="cart__subtotal">
+                    {<FormatPrice price={quantity * price} />}
+                </div>
+                <div type='button'><BsTrashFill className="cart__remove" size={20} /></div>
             </div>
 
         </>

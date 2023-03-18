@@ -6,18 +6,12 @@ import { RiTruckFill } from 'react-icons/ri'
 import { FaExchangeAlt } from 'react-icons/fa'
 import { MdOutlineSecurity } from 'react-icons/md'
 import Colorsavailable from './components/Colorsavailable';
-import { useState } from 'react';
 import ProductImages from './components/ProductImages';
 import Stars from './components/Stars';
-import { useCartContext } from './context/CartContext';
-import QuantityCounter from './components/quantityCounter';
 
 const SingleProduct = () => {
   const { getSingleProductDetails, API, singleProduct, progress } = useFeaturedData();
-  const [selectedColor, setSelectedColor] = useState("")
-
-  const {addToCart} = useCartContext()
-
+  
   const { id } = useParams();
   const { name, company, price, description, category, stock, reviews, stars, colors, image } = singleProduct;
 
@@ -73,14 +67,7 @@ const SingleProduct = () => {
                   <span>{company}</span>
                 </div>
               </div>
-              <div className="select__choice">
-                <div className="your__choice">
-                  Colors:
-                  <Colorsavailable colors={colors} updateColor={setSelectedColor} selectedColor={selectedColor}/>
-                </div>
-              </div>
-              <QuantityCounter stock={stock}/>
-              <Link to="/cart" className='btn' onClick={()=> addToCart(id, selectedColor, singleProduct, stock)}>add to cart</Link>
+              <Colorsavailable products={singleProduct} />
             </div>
           </div>
         </div>
