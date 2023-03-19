@@ -4,10 +4,19 @@ import { Link } from 'react-router-dom';
 import { useCartContext } from '../context/CartContext';
 
 const Colorsavailable = ({ products }) => {
-  const { id, colors=[""], stock } = products;
+  const { id, colors = [""], stock } = products;
   const [selectedColor, setSelectedColor] = useState(colors[0])
+  const { addToCart } = useCartContext()
+  const [quantity, setQuantity] = useState(1)
 
-  const {addToCart} = useCartContext()
+  const setIncrease = () => {
+    quantity < stock && setQuantity(prev => prev + 1) 
+  }
+
+  const setDecrease = () => {
+    quantity > 1 && setQuantity(prev => prev - 1)
+  }
+
 
   return (
     <>
@@ -23,8 +32,8 @@ const Colorsavailable = ({ products }) => {
             })}
           </div>
         </div>
-        <QuantityCounter stock={stock} />
-        <Link to="/cart" className='btn' onClick={() => addToCart(id, selectedColor, products, stock)}>add to cart</Link>
+        <QuantityCounter quantity={quantity} setIncrease={setIncrease} setDecrease={setDecrease} />
+        <Link to="/cart" className='btn' onClick={() => addToCart(id, selectedColor, products, quantity)}>add to cart</Link>
       </div>
     </>
   )

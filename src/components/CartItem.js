@@ -1,10 +1,20 @@
 import React from 'react'
 import { BsTrashFill } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import { useCartContext } from '../context/CartContext'
 import FormatPrice from './FormatPrice'
 import QuantityCounter from './quantityCounter'
 
 const CartItem = ({ id, name, image, price, max, quantity, color }) => {
+    const { removeItem } = useCartContext();
+
+    const setIncrease = () => {
+        console.log('increase')
+    }
+
+    const setDecrease = () => {
+        console.log('decrease')
+    }
 
     return (
         <>
@@ -23,12 +33,12 @@ const CartItem = ({ id, name, image, price, max, quantity, color }) => {
                 </div>
 
                 <div className="cart__quantity">
-                    <QuantityCounter stock={quantity} />
+                    <QuantityCounter quantity={quantity} setIncrease={setIncrease} setDecrease={setDecrease} />
                 </div>
                 <div className="cart__subtotal">
                     {<FormatPrice price={quantity * price} />}
                 </div>
-                <div type='button'><BsTrashFill className="cart__remove" size={20} /></div>
+                <div type='button'><BsTrashFill className="cart__remove" size={20} onClick={() => removeItem(id)} /></div>
             </div>
 
         </>

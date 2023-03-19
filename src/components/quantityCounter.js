@@ -1,17 +1,12 @@
-import React, {useState} from 'react'
+import React from 'react'
 
-const QuantityCounter = ({stock}) => {
-  const [quantity, setQuantity] = useState(1)
+const QuantityCounter = ({ quantity, setIncrease, setDecrease }) => {
 
     return (
         <div className="quantity">
-            <button className='btn-2' onClick={() => {
-                quantity > 1 && setQuantity(prev => prev - 1)
-            }}>-</button>
+            <button className='btn-2' onClick={()=> setDecrease()}>-</button>
             {quantity}
-            <button className='btn-2' onClick={() => {
-                quantity < stock && setQuantity(prev => prev + 1)
-            }}>+</button>
+            <button className='btn-2' onClick={()=> setIncrease()}>+</button>
         </div>
     )
 }

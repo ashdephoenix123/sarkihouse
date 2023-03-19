@@ -5,7 +5,8 @@ import EmptyCart from './components/EmptyCart';
 import { Link } from 'react-router-dom';
 
 const Cart = () => {
-  const { cartItems } = useCartContext();
+  const { cartItems, clearCart } = useCartContext();
+
   return (
     <>{cartItems.length !==0 ?
       <div className="container2">
@@ -17,13 +18,13 @@ const Cart = () => {
           <p className='cart-title-design'>remove</p>
         </div>
         <hr />
-        { cartItems.map((item) => {
+        {cartItems.map((item) => {
           return <CartItem key={item.id} {...item} />
         })}
         <hr />
         <div className="cart-button">
           <Link to="/products" className='btn'>continue shopping</Link>
-          <button type='btn' className='btn' style={{backgroundColor: "orangered"}}>clear cart</button>
+          <button type='button' className='btn' style={{backgroundColor: "orangered"}} onClick={clearCart}>clear cart</button>
         </div>
         
       </div>
