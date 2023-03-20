@@ -13,11 +13,17 @@ const getCartProducts = () => {
     }
 }
 
+/*
+const parsedData = JSON.parse(cartData);
+if(!Array.isArray(parsedData)) return [];
+return parsedData
+*/
+
 const initialState = {
     cartItems: getCartProducts(),
     totalItem: 0,
     shippingFee: 5000,
-    cartTotal: 0,
+    cartTotal: 0
 }
 
 const CartProvider = ({ children }) => {

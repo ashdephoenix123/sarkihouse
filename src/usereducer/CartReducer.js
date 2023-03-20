@@ -48,16 +48,16 @@ const reducer = (state, action) => {
 
         case "SET_DECREASE":
             let decreaseData = state.cartItems.map((item) => {
-                if(item.id === action.payload){
+                if (item.id === action.payload) {
                     let newQuantity = item.quantity - 1;
-                    if(newQuantity < 1){
+                    if (newQuantity < 1) {
                         newQuantity = 1
-                    } 
+                    }
                     return {
                         ...item,
                         quantity: newQuantity
                     }
-                }else {
+                } else {
                     return item
                 }
             })
@@ -68,16 +68,16 @@ const reducer = (state, action) => {
 
         case "SET_INCREASE":
             let increaseData = state.cartItems.map((item) => {
-                if(item.id === action.payload){
+                if (item.id === action.payload) {
                     let newQuantity = item.quantity + 1;
-                    if(newQuantity >= item.max){
+                    if (newQuantity >= item.max) {
                         newQuantity = item.max
                     }
                     return {
                         ...item,
                         quantity: newQuantity
                     }
-                }else {
+                } else {
                     return item
                 }
             })
@@ -86,16 +86,22 @@ const reducer = (state, action) => {
                 cartItems: increaseData
             }
 
-        case "UPDATE_CART_TOTAL_PRODUCTS": 
-            let totalProductsInCart = state.cartItems.reduce((initialValue, CurrentElement)=> {
-                const {quantity} = CurrentElement;
-                initialValue = initialValue + quantity;
-                return initialValue
-            }, 0)
+        case "UPDATE_CART_TOTAL_PRODUCTS":
+
+            let { totalItem, cartTotal } = state.cartItems.reduce((accumulator, currentElement) => {
+                let { quantity, price } = currentElement;
+
+                accumulator.totalItem += quantity;
+                accumulator.cartTotal += (quantity * price);
+
+                return accumulator;
+
+            }, { totalItem: 0, cartTotal: 0 })
 
             return {
                 ...state,
-                totalItem: totalProductsInCart
+                totalItem,
+                cartTotal
             }
 
         case "REMOVE_CART_ITEM":

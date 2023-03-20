@@ -1232,6 +1232,11 @@ select {
   width: 60%;
   margin: 0 auto;
   padding: 6rem 0;
+
+  .float-right{
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .cart-title{
@@ -1282,9 +1287,39 @@ select {
     justify-content: space-between;
     margin: 1rem 0;
   }
+  
+  &-total{
+    display: inline-block;
+    padding: 3rem 2rem;
+    background-color: #eee;
+    margin-top: 3rem;
+    border-radius: 10px;
+    width: 25%;
+  }
+
+  &_sub{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-weight: 600;
+
+    & span:first-child{
+      color: var(--col-gray-1);
+    }
+
+    & span:last-child{
+      color: var(--col-gray-3);
+    }
+
+    &:last-child{
+      border-top: 2px solid #c5c1c1;
+      padding-top: .5rem;
+    }
+  }
 }
 
 
 .center2{
   justify-content: center;
 }
+
