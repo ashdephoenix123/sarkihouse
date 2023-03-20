@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { useCartContext } from '../context/CartContext';
 
 
 const Navbar = () => {
+  const {totalItem} = useCartContext();
 
   const uncheck = () => {
     document.getElementById('navigation-toggle').checked=false;
@@ -38,7 +40,7 @@ const Navbar = () => {
           <li className="nav-items"><Link className='nav-link' to="/products">products</Link></li>
           <li className="nav-items"><Link className='nav-link' to="/contact">contact</Link></li>
           <li className="nav-items"><button className='btn margin-right-2'>Log in</button></li>
-          <li className="nav-items"><Link className='nav-link' to="/cart"><AiOutlineShoppingCart size={30} /><span>10</span></Link></li>
+          <li className="nav-items"><Link className='nav-link' to="/cart"><AiOutlineShoppingCart size={30} />{totalItem !== 0 &&<span>{totalItem}</span>}</Link></li>
 
         </ul>
       </div>

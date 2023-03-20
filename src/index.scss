@@ -399,6 +399,7 @@ code {
   padding: 10rem 0;
   position: relative;
   color: #fff;
+  width: 100%;
 
   &__part-1 {
     width: 50%;
@@ -434,7 +435,7 @@ code {
   }
 
   &__part-2 {
-    padding: 3rem 1rem 5rem;
+    padding: 3rem 2rem 5rem;
     display: grid;
     grid-template-rows: min-content;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -569,11 +570,10 @@ code {
 
     &-items {
       display: grid;
-      grid-template-rows: minmax(200px, max-content);
-      grid-template-columns: repeat(auto-fit, minmax(200px, 250px));
+      grid-template-columns: repeat(auto-fit, minmax(min-content, 250px));
       grid-column-gap: 3rem;
       grid-row-gap: 3rem;
-      grid-auto-rows: minmax(200px, max-content);
+      grid-auto-rows: minmax(min-content, max-content);
       justify-content: center;
 
       &>* {
